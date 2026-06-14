@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="فروتز - اكواب فاكهة طازجة مقطعة توصل لبابك. اطلب الآن واحصل على خصم 20%.">
+<title>فروتز — فاكهة طازجة تصل لبابك</title>
+
+<!-- ===== PWA META TAGS ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FF6B35">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="فروتز">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="فروتز">
+<meta name="msapplication-TileColor" content="#FF6B35">
+<meta name="msapplication-tap-highlight" content="no">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="simo_fruitz_logo_only.png">
+<link rel="icon" type="image/png" sizes="32x32"  href="simo_fruitz_logo_only.png">
+<link rel="icon" type="image/png" sizes="16x16"  href="simo_fruitz_logo_only.png">
+<link rel="mask-icon" href="simo_fruitz_logo_only.png" color="#FF6B35">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="فروتز — فاكهة طازجة تصل لبابك">
+<meta property="og:description" content="اكواب فاكهة طازجة مقطعة توصل لبابك. اطلب الآن واحصل على خصم 20%.">
+<meta property="og:locale"      content="ar_DZ">
+<!-- ===== END PWA META TAGS ===== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          org: '#FF6B35',
+          mango: '#FFB830',
+          wred: '#E84855',
+          kiwi: '#5CB85C',
+          pinkf: '#FF4D6D',
+          cream: '#FFFBF5',
+          dark: '#1a1a1a'
+        },
+        fontFamily: {
+          tajawal: ['Tajawal','sans-serif'],
+          cairo: ['Cairo','Tajawal','sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --org:#FF6B35;
+  --mango:#FFB830;
+  --wred:#E84855;
+  --kiwi:#5CB85C;
+  --pink:#FF4D6D;
+  --cream:#FFFBF5;
+  --dark:#1a1a1a;
+  --g1:linear-gradient(135deg,#FF6B35,#FFB830);
+  --g2:linear-gradient(135deg,#FF4D6D,#E84855);
+  --g3:linear-gradient(135deg,#5CB85C,#2E8B57);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo','Tajawal',sans-serif;background:var(--cream);overflow-x:hidden;color:var(--dark);direction:rtl;text-align:right}
+
+/* ===== CART OVERLAY ===== */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:900;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+
+/* ===== CART DRAWER ===== */
+.cart-drawer{
+  position:fixed;top:0;left:0;width:min(400px,100vw);height:100vh;
+  background:#fffbf5;
+  border-left:1px solid rgba(255,107,53,0.15);
+  box-shadow:-4px 0 50px rgba(255,107,53,0.1);
+  z-index:1000;display:flex;flex-direction:column;
+  transform:translateX(-105%);
+  transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+.cart-drawer.open{transform:translateX(0)}
+
+.cart-header{
+  padding:20px 20px 18px;
+  border-bottom:1px solid rgba(255,107,53,0.1);
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg,rgba(255,184,48,0.07),rgba(255,107,53,0.07));
+  flex-shrink:0;
+}
+.cart-title{font-size:20px;font-weight:800;color:var(--dark);display:flex;align-items:center;gap:8px}
+.cart-close{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,107,53,0.1);border:none;cursor:pointer;
+  font-size:18px;color:var(--org);transition:all .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.cart-close:hover{background:var(--org);color:#fff;transform:rotate(90deg)}
+
+.cart-items{flex:1;overflow-y:auto;padding:14px;scrollbar-width:thin;scrollbar-color:rgba(255,107,53,0.3) transparent}
+.cart-items::-webkit-scrollbar{width:3px}
+.cart-items::-webkit-scrollbar-thumb{background:rgba(255,107,53,0.3);border-radius:3px}
+
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;padding:30px;text-align:center}
+.cart-empty-icon{font-size:72px;animation:floatBowl 3.5s ease-in-out infinite}
+.cart-empty h3{font-size:19px;font-weight:800;color:#444}
+.cart-empty p{font-size:14px;color:#999;line-height:1.8}
+
+.cart-item{
+  background:#fff;border:1px solid rgba(255,107,53,0.1);
+  border-radius:14px;padding:12px;margin-bottom:10px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.05);
+  transition:transform .2s,box-shadow .2s;
+}
+.cart-item:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.09)}
+.cart-item-emoji{
+  font-size:36px;width:58px;height:58px;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(255,184,48,0.15),rgba(255,107,53,0.15));
+  flex-shrink:0;
+}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:15px;color:var(--org);font-weight:800}
+.cart-item-controls{display:flex;align-items:center;gap:7px;margin-top:7px}
+.qty-btn{
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid rgba(255,107,53,0.3);
+  background:transparent;cursor:pointer;
+  font-size:13px;font-weight:800;color:var(--org);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;line-height:1;font-family:'Tajawal',sans-serif;
+}
+.qty-btn:hover{background:var(--org);color:#fff;border-color:var(--org)}
+.qty-num{font-size:14px;font-weight:800;color:var(--dark);min-width:18px;text-align:center}
+.cart-item-del{background:none;border:none;cursor:pointer;color:#ddd;font-size:14px;padding:4px 6px;transition:all .2s;margin-right:2px;border-radius:6px}
+.cart-item-del:hover{color:var(--wred)}
+
+.cart-footer{padding:16px 20px;border-top:1px solid rgba(255,107,53,0.1);background:#fff;flex-shrink:0}
+.promo-row{display:flex;gap:8px;margin-bottom:14px}
+.promo-input{
+  flex:1;padding:9px 13px;border-radius:50px;
+  border:1.5px solid rgba(255,107,53,0.2);
+  background:#fffbf5;font-family:'Tajawal',sans-serif;
+  font-size:13px;color:var(--dark);outline:none;
+  transition:border-color .2s;direction:rtl;text-align:right;
+}
+.promo-input:focus{border-color:var(--org)}
+.promo-input::placeholder{color:#bbb}
+.promo-btn{
+  background:var(--g1);color:#fff;border:none;
+  padding:9px 16px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:opacity .2s;
+}
+.promo-btn:hover{opacity:0.9}
+
+.summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-size:14px;color:#666}
+.summary-row.total{font-size:17px;font-weight:800;color:var(--dark);border-top:1px dashed rgba(0,0,0,0.1);padding-top:9px;margin-top:9px}
+.summary-row.total span:last-child{color:var(--org)}
+.summary-discount{color:var(--kiwi);font-weight:700}
+.checkout-btn{
+  width:100%;background:var(--g1);color:#fff;border:none;
+  padding:14px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;
+  cursor:pointer;box-shadow:0 6px 24px rgba(255,107,53,0.38);
+  transition:transform .2s,box-shadow .2s;margin-top:12px;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.checkout-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(255,107,53,0.48)}
+
+.cart-badge{
+  position:absolute;top:-5px;left:-5px;
+  width:19px;height:19px;border-radius:50%;
+  background:var(--wred);color:#fff;
+  font-size:10px;font-weight:800;
+  display:none;align-items:center;justify-content:center;
+  border:2px solid #fff;
+  animation:none;
+}
+.cart-badge.bump{animation:badgePop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes badgePop{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+.nav-cart-wrap{position:relative;display:inline-block}
+
+/* ===== NAV ===== */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,251,245,0.88);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,107,53,0.1);
+  padding:0 40px;
+}
+.nav-inner{max-width:1200px;margin:0 auto;height:68px}
+.logo{font-weight:900;font-size:27px;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;white-space:nowrap}
+.logo-dot{-webkit-text-fill-color:#FFB830;color:#FFB830}
+
+/* ===== NAV DROPDOWNS ===== */
+.dropdown-panel{
+  z-index:110;
+  animation:dropdownIn .18s ease-out;
+  transform-origin:top center;
+}
+@keyframes dropdownIn{
+  from{opacity:0;transform:translateY(-8px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* ===== HERO ULTRA ===== */
+.hero{
+  min-height:auto;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#0a1628 0%,#0d2137 35%,#0a1f10 70%,#1a0a05 100%);
+}
+
+/* ── Mesh gradient background ── */
+.hero-mesh{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 65% 25%, rgba(255,140,50,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 60% at 15% 75%, rgba(92,184,92,0.35) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 50% at 88% 70%, rgba(255,70,100,0.32) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 40% 10%, rgba(255,184,48,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 35% at 5% 40%,  rgba(100,200,80,0.22) 0%, transparent 50%);
+}
+
+/* ── Animated grid lines ── */
+.hero-grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridDrift 20s linear infinite;
+}
+@keyframes gridDrift{0%{transform:translateY(0)}100%{transform:translateY(60px)}}
+
+/* ── Orbs ── */
+.orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.orb1{width:550px;height:550px;background:radial-gradient(circle,rgba(255,140,30,0.55),rgba(255,80,30,0.3),transparent 70%);top:-80px;right:-60px;animation:orbPulse 8s ease-in-out infinite}
+.orb2{width:450px;height:450px;background:radial-gradient(circle,rgba(80,200,80,0.4),rgba(92,184,92,0.2),transparent 70%);bottom:-60px;left:-40px;animation:orbPulse 10s ease-in-out infinite;animation-delay:3s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(255,60,100,0.35),rgba(255,120,50,0.2),transparent 70%);top:38%;left:28%;animation:orbPulse 7s ease-in-out infinite;animation-delay:1.5s}
+@keyframes orbPulse{0%,100%{transform:scale(1) translate(0,0)}33%{transform:scale(1.15) translate(20px,-20px)}66%{transform:scale(0.92) translate(-15px,15px)}}
+
+/* ── Floating particles ── */
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:particleDrift linear infinite}
+@keyframes particleDrift{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-100px) rotate(720deg);opacity:0}
+}
+
+/* ── Floating emoji fruits ── */
+.ff{position:absolute;user-select:none;z-index:3;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5));animation:ffSpin var(--d,7s) ease-in-out infinite;animation-delay:var(--dl,0s);font-style:normal;line-height:1}
+@keyframes ffSpin{
+  0%{transform:translateY(0) rotate(0deg) scale(1)}
+  30%{transform:translateY(-22px) rotate(8deg) scale(1.05)}
+  60%{transform:translateY(-10px) rotate(-5deg) scale(0.97)}
+  100%{transform:translateY(0) rotate(0deg) scale(1)}
+}
+.ff1{font-size:60px;top:10%;right:7%;--d:6s;--dl:0s}
+.ff2{font-size:48px;top:16%;left:5%;--d:8s;--dl:1.2s}
+.ff3{font-size:54px;bottom:16%;right:6%;--d:7s;--dl:2.4s}
+.ff4{font-size:46px;bottom:22%;left:4%;--d:5.5s;--dl:.7s}
+.ff5{font-size:40px;top:46%;right:1%;--d:9s;--dl:3.2s}
+.ff6{font-size:38px;top:36%;left:1%;--d:6.8s;--dl:1.8s}
+.ff7{font-size:34px;top:68%;right:16%;--d:7.5s;--dl:0.5s}
+.ff8{font-size:32px;top:6%;left:20%;--d:8.5s;--dl:2s}
+
+/* ── Sparkles ── */
+.sparkle{position:absolute;pointer-events:none;z-index:2}
+.sparkle::before,.sparkle::after{content:'✦';position:absolute;animation:sparkleTwinkle var(--sd,2s) ease-in-out infinite;animation-delay:var(--sdl,0s);color:var(--sc,#FFB830);font-size:var(--ss,14px)}
+.sparkle::after{animation-delay:calc(var(--sdl,0s) + 1s);font-size:calc(var(--ss,14px) * 0.6)}
+@keyframes sparkleTwinkle{0%,100%{opacity:0;transform:scale(0) rotate(0deg)}50%{opacity:1;transform:scale(1) rotate(180deg)}}
+.sp1{top:20%;right:25%;--sc:#FFB830;--ss:18px;--sd:2.5s;--sdl:0s}
+.sp2{top:55%;left:18%;--sc:#FF6B35;--ss:14px;--sd:3s;--sdl:1s}
+.sp3{bottom:30%;right:30%;--sc:#FF4D6D;--ss:16px;--sd:2s;--sdl:.5s}
+.sp4{top:30%;left:35%;--sc:#5CB85C;--ss:12px;--sd:3.5s;--sdl:1.5s}
+.sp5{bottom:20%;left:35%;--sc:#FFB830;--ss:20px;--sd:2.8s;--sdl:.8s}
+
+.hero-inner{
+  max-width:760px;margin:0 auto;padding:90px 24px 70px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  position:relative;z-index:4;width:100%;
+}
+
+/* ── Text content ── */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,107,53,0.12);
+  border:1px solid rgba(255,107,53,0.3);
+  border-radius:50px;padding:6px 16px;
+  font-size:13px;font-weight:700;color:#FF8C55;margin-bottom:22px;
+  backdrop-filter:blur(10px);
+}
+.bdot{width:8px;height:8px;background:#FF6B35;border-radius:50%;animation:bdotAnim 1.4s ease-in-out infinite;box-shadow:0 0 8px rgba(255,107,53,0.8)}
+@keyframes bdotAnim{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 8px rgba(255,107,53,0.8)}50%{opacity:.4;transform:scale(.6);box-shadow:0 0 3px rgba(255,107,53,0.3)}}
+
+.hero h1{
+  font-size:clamp(36px,5.2vw,68px);font-weight:900;
+  line-height:1.15;margin-bottom:20px;
+  color:#fff;letter-spacing:-1px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#FF6B35 0%,#FFB830 40%,#FF4D6D 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;display:inline-block;
+}
+.hero h1 em::after{
+  content:attr(data-text);
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#FF6B35,#FFB830,#FF4D6D);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:blur(18px);opacity:0.5;z-index:-1;
+}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:32px;max-width:520px}
+
+/* ── Pill stats row ── */
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;justify-content:center}
+.hero-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:50px;padding:6px 14px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);
+  backdrop-filter:blur(8px);white-space:nowrap;
+}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%}
+
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px;justify-content:center}
+.btn-primary{
+  background:linear-gradient(135deg,#FF6B35,#FFB830);color:#fff;border:none;
+  padding:15px 32px;border-radius:50px;font-weight:800;font-size:15px;
+  cursor:pointer;font-family:'Tajawal',sans-serif;
+  box-shadow:0 8px 32px rgba(255,107,53,0.5),0 0 0 0 rgba(255,107,53,0.4);
+  transition:transform .2s,box-shadow .2s;
+  animation:btnGlow 3s ease-in-out infinite;
+  display:flex;align-items:center;justify-content:center;
+}
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 8px 32px rgba(255,107,53,0.5),0 0 0 0 rgba(255,107,53,0.2)}
+  50%{box-shadow:0 8px 32px rgba(255,107,53,0.5),0 0 30px 8px rgba(255,107,53,0.15)}
+}
+.btn-primary:hover{transform:translateY(-3px) scale(1.03)}
+.btn-outline{
+  background:rgba(255,255,255,0.06);color:#fff;
+  border:1px solid rgba(255,255,255,0.2);
+  padding:14px 28px;border-radius:50px;font-weight:700;font-size:15px;
+  cursor:pointer;font-family:'Tajawal',sans-serif;
+  transition:all .25s;backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.btn-outline:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.35)}
+
+.hero-trust{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.avatars{display:flex}
+.av{
+  width:34px;height:34px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  margin-right:-8px;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+.av:last-child{margin-right:0}
+.trust-txt{font-size:13px;color:rgba(255,255,255,0.5)}
+.trust-txt strong{color:#fff}
+.fa-solid,.fa-brands,.fa-regular{display:inline-block;font-family:'Font Awesome 6 Free','Font Awesome 6 Brands',sans-serif}
+
+/* ===== IMAGE LOADING STATE ===== */
+.pc-img-real img,.tav-img{
+  background:linear-gradient(135deg,rgba(255,184,48,0.15),rgba(255,107,53,0.15));
+}
+.pc-img-real img[src=""],.tav-img[src=""]{
+  opacity:0;
+}
+
+/* ===== HERO TEXT ENTRANCE ===== */
+@keyframes slideUpFade{
+  0%{opacity:0;transform:translateY(40px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+.hero-inner>*{opacity:0;animation:slideUpFade .8s ease forwards}
+.hero-inner>*:nth-child(1){animation-delay:.1s}
+.hero-inner>*:nth-child(2){animation-delay:.25s}
+.hero-inner>*:nth-child(3){animation-delay:.4s}
+.hero-inner>*:nth-child(4){animation-delay:.55s}
+.hero-inner>*:nth-child(5){animation-delay:.7s}
+.hero-inner>*:nth-child(6){animation-delay:.85s}
+
+/* ===== STATS BAR ===== */
+.stats-bar{
+  background:rgba(255,255,255,0.97);
+  border-radius:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.14),0 0 0 1px rgba(255,107,53,0.08);
+  padding:28px 40px;margin:0 40px;
+  position:relative;z-index:10;transform:translateY(-34px);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;text-align:center;
+}
+
+.stat-item{padding:0 16px;position:relative}
+.stat-item:not(:last-child)::after{
+  content:'';position:absolute;left:0;top:15%;bottom:15%;
+  width:1px;background:linear-gradient(180deg,transparent,rgba(255,107,53,0.2),transparent);
+}
+.stat-num{
+  font-size:32px;font-weight:900;
+  background:var(--g1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;
+  filter:drop-shadow(0 2px 8px rgba(255,107,53,0.25));
+}
+.stat-lbl{font-size:13px;color:#888;margin-top:4px;font-weight:600}
+
+/* ===== SECTIONS ===== */
+section{padding:72px 40px}
+/* Section entrance animations */
+.sec-head,.prod-grid,.feat-grid,.hiw-grid,.testi-grid{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.sec-head.visible,.prod-grid.visible,.feat-grid.visible,
+.hiw-grid.visible,.testi-grid.visible{opacity:1;transform:translateY(0)}
+.wrap{max-width:1200px;margin:0 auto}
+.stag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--org);margin-bottom:10px}
+.sh2{font-size:clamp(26px,3.8vw,44px);font-weight:900;line-height:1.22;color:var(--dark);margin-bottom:14px}
+.sub{font-size:16px;color:#777;line-height:1.9;max-width:500px}
+.sec-head{margin-bottom:48px}
+.tc{text-align:center}
+.tc .sub{margin:0 auto}
+
+/* ===== PRODUCTS ===== */
+.prod-bg{background:linear-gradient(180deg,#fff8f0,#fff)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;max-width:1120px;margin:0 auto}
+
+.pc{
+  background:#fff;
+  border:1px solid rgba(255,107,53,0.08);
+  border-radius:24px;padding:22px;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,0.06),0 1px 0 rgba(255,255,255,0.8) inset;
+  transition:transform .35s cubic-bezier(.34,.7,.5,1),box-shadow .35s ease;
+  cursor:pointer;
+}
+.pc::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(145deg,rgba(255,184,48,0.04),rgba(255,107,53,0.04));
+  z-index:0;pointer-events:none;
+}
+.pc::after{
+  content:'';position:absolute;top:0;right:0;left:0;height:3px;border-radius:24px 24px 0 0;
+  background:var(--g1);opacity:0;transition:opacity .3s;
+}
+.pc:hover::after{opacity:1}
+.pc>*{position:relative;z-index:1}
+.pc:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 24px 60px rgba(255,107,53,0.15),0 8px 24px rgba(0,0,0,0.08)}
+
+.pc-img{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:76px;margin-bottom:14px;background:linear-gradient(135deg,rgba(255,184,48,0.1),rgba(255,107,53,0.1));border-radius:14px}
+/* Real image cards */
+.pc-img-real{width:100%;height:180px;border-radius:16px;overflow:hidden;margin-bottom:0;position:relative}
+.pc-img-real img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.pc:hover .pc-img-real img{transform:scale(1.08)}
+.pc-img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.25) 100%)}
+.pc-body{padding:14px 0 0}
+.pc-badge{position:absolute;top:10px;left:10px;background:var(--g2);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;z-index:3;letter-spacing:0.2px;line-height:1.5;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.18)}
+.pc-name{font-weight:800;font-size:16px;color:var(--dark);margin-bottom:3px}
+.pc-desc{font-size:13px;color:#aaa;margin-bottom:10px;line-height:1.6}
+.pc-row{display:flex;align-items:center;justify-content:space-between}
+.pc-price{font-size:20px;font-weight:900;color:var(--dark)}
+.pc-price span{font-size:12px;color:#bbb;font-weight:400}
+.pc-rating{display:flex;align-items:center;gap:3px;font-size:12px;color:#888;font-weight:600}
+.stars{color:#FFB830}
+.pc-btn{
+  width:100%;background:var(--g1);color:#fff;border:none;
+  padding:11px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-weight:800;font-size:14px;
+  cursor:pointer;margin-top:12px;
+  transition:transform .2s,box-shadow .2s,background .3s;
+}
+.pc-btn:hover{transform:scale(1.03);box-shadow:0 5px 18px rgba(255,107,53,0.38)}
+.pc-btn.added{background:linear-gradient(135deg,#5CB85C,#2E8B57)}
+
+/* ===== FEATURES ===== */
+.feat-sec{background:#1a1a1a}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:24px;max-width:1200px;margin:0 auto}
+.feat-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
+  border-radius:18px;padding:28px 22px;text-align:center;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.feat-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.feat-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,0.18)}
+.feat-card:hover::after{opacity:1}
+.feat-card:nth-child(1)::after{background:linear-gradient(135deg,rgba(255,184,48,0.1),rgba(255,107,53,0.1))}
+.feat-card:nth-child(2)::after{background:linear-gradient(135deg,rgba(255,77,109,0.1),rgba(232,72,85,0.1))}
+.feat-card:nth-child(3)::after{background:linear-gradient(135deg,rgba(92,184,92,0.1),rgba(46,139,87,0.1))}
+.feat-card:nth-child(4)::after{background:linear-gradient(135deg,rgba(255,107,53,0.1),rgba(255,184,48,0.1))}
+.feat-card>*{position:relative;z-index:1}
+.feat-ico{font-size:40px;margin-bottom:14px;display:block;animation:featFloat 5s ease-in-out infinite;line-height:1.2}
+.feat-ico i{font-size:40px}
+@keyframes featFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.feat-title{font-weight:800;font-size:16px;color:#fff;margin-bottom:7px}
+.feat-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8}
+.feat-sec .sh2{color:#fff}
+.feat-sec .sub{color:rgba(255,255,255,0.5)}
+
+/* ===== HOW IT WORKS ===== */
+.hiw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;max-width:1100px;margin:0 auto;position:relative}
+.hiw-grid::before{content:'';position:absolute;top:44px;right:18%;left:18%;height:2px;background:linear-gradient(270deg,var(--org),var(--mango),var(--kiwi));z-index:0;border-radius:2px;box-shadow:0 0 12px rgba(255,107,53,0.4)}
+.hiw-step{text-align:center;position:relative;z-index:1}
+.step-circle{width:68px;height:68px;border-radius:50%;background:var(--g1);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 7px 22px rgba(255,107,53,0.32)}
+.step-t{font-weight:800;font-size:16px;color:var(--dark);margin-bottom:7px}
+.step-d{font-size:13px;color:#888;line-height:1.75}
+
+/* ===== TESTIMONIALS ===== */
+.testi-sec{background:linear-gradient(155deg,#FFF0E8,#fff6ee)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;max-width:1100px;margin:0 auto}
+.testi-card{background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.97);border-radius:18px;padding:24px;box-shadow:0 3px 24px rgba(0,0,0,0.06)}
+.testi-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.tav{width:46px;height:46px;border-radius:50%;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.tav-img{width:50px;height:50px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,107,53,0.2);box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.tverified{font-size:12px;color:#888;margin-top:12px;display:flex;align-items:center}
+.tname{font-weight:800;font-size:14px;color:var(--dark)}
+.trole{font-size:12px;color:#bbb}
+.tstars{color:#FFB830;font-size:13px;margin-bottom:10px}
+.tquote{font-size:14px;color:#555;line-height:1.88}
+.tfruit{font-size:19px;margin-top:14px}
+
+/* ===== CTA ===== */
+.cta-wrap{padding:55px 40px}
+.cta-box{
+  background:linear-gradient(135deg,#FF6B35,#FFB830 50%,#FF4D6D);
+  border-radius:28px;padding:55px 40px;text-align:center;
+  position:relative;overflow:hidden;max-width:1120px;margin:0 auto;
+}
+.cta-box::before{content:'🍊 🥭 🍓 🥝 🍍 🍇 🍉';position:absolute;top:-10px;right:0;left:0;font-size:55px;opacity:0.1;letter-spacing:18px;white-space:nowrap;pointer-events:none}
+.cta-box h2{font-size:clamp(26px,3.8vw,44px);font-weight:900;color:#fff;margin-bottom:14px;position:relative}
+.cta-box p{font-size:16px;color:rgba(255,255,255,0.87);margin-bottom:30px;position:relative}
+.btn-white{background:#fff;color:var(--org);border:none;padding:14px 36px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 7px 26px rgba(0,0,0,0.13);transition:transform .2s;display:inline-flex;align-items:center;gap:7px;position:relative}
+.btn-white:hover{transform:scale(1.04)}
+
+/* ===== FOOTER ===== */
+footer{background:#111;color:#fff;padding:55px 40px 28px}
+.foot-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px}
+.foot-brand p{font-size:13px;color:rgba(255,255,255,0.42);line-height:1.85;max-width:220px;margin-top:11px}
+.foot-newsletter{margin-top:20px}
+.foot-nl-label{font-size:12px;color:rgba(255,255,255,0.35);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.foot-nl-row{display:flex;gap:0}
+.foot-nl-input{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-left:none;border-radius:0 50px 50px 0;padding:9px 14px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;outline:none}
+.foot-nl-input::placeholder{color:rgba(255,255,255,0.25)}
+.foot-nl-btn{background:var(--g1);color:#fff;border:none;padding:9px 18px;border-radius:50px 0 0 50px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.socials{display:flex;gap:10px;margin-top:18px}
+.soc-btn{width:36px;height:36px;background:rgba(255,255,255,0.07);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;transition:background .2s;cursor:pointer}
+.soc-btn:hover{background:var(--org)}
+.foot-col h4{font-weight:800;font-size:13px;color:#fff;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.foot-col a:hover{color:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:22px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,0.33)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{color:rgba(255,255,255,0.33);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:#fff}
+
+/* ===== TOAST ===== */
+#toast{
+  position:fixed;bottom:28px;right:28px;
+  background:var(--dark);color:#fff;
+  padding:12px 20px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  opacity:0;transform:translateY(16px);
+  transition:all .3s;z-index:9999;pointer-events:none;
+  box-shadow:0 7px 26px rgba(0,0,0,0.22);
+  display:flex;align-items:center;gap:7px;
+  max-width:calc(100vw - 56px);
+}
+#toast.show{opacity:1;transform:translateY(0)}
+
+/* ===== FA ICON EMOJI FALLBACK ===== */
+/* When FA doesn't load, i elements show nothing - add visible fallback */
+.feat-ico i::before{font-family:'Font Awesome 6 Free';font-weight:900}
+.fa-bolt::before{content:"\f0e7"}
+.fa-seedling::before{content:"\f4d8"}
+.fa-medal::before{content:"\f5a2"}
+.fa-recycle::before{content:"\f1b8"}
+.fa-cart-shopping::before{content:"\f07a"}
+.fa-bag-shopping::before{content:"\f290"}
+
+/* ===== PWA — INSTALL BANNER ===== */
+#pwa-install-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:8000;
+  background:#fff;border-top:1px solid rgba(255,107,53,0.15);
+  box-shadow:0 -8px 40px rgba(0,0,0,0.12);
+  padding:16px 20px;
+  display:flex;align-items:center;gap:14px;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  direction:rtl;
+}
+#pwa-install-banner.show{transform:translateY(0)}
+.pwa-banner-icon{font-size:42px;flex-shrink:0;line-height:1}
+.pwa-banner-text{flex:1;min-width:0}
+.pwa-banner-title{font-weight:800;font-size:15px;color:#1a1a1a;margin-bottom:3px}
+.pwa-banner-sub{font-size:12px;color:#999;line-height:1.5}
+.pwa-banner-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
+.pwa-btn-install{
+  background:linear-gradient(135deg,#FF6B35,#FFB830);
+  color:#fff;border:none;padding:10px 18px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;
+  cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 16px rgba(255,107,53,0.3);
+  transition:transform .2s;
+}
+.pwa-btn-install:hover{transform:scale(1.04)}
+.pwa-btn-dismiss{
+  background:rgba(0,0,0,0.06);color:#666;border:none;
+  width:34px;height:34px;border-radius:50%;
+  font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;flex-shrink:0;
+}
+.pwa-btn-dismiss:hover{background:rgba(0,0,0,0.12)}
+
+/* ===== PWA — PUSH NOTIFICATION PROMPT ===== */
+#pwa-push-prompt{
+  position:fixed;top:80px;right:16px;left:16px;max-width:380px;
+  margin:0 auto;z-index:8000;
+  background:#fff;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.15),0 0 0 1px rgba(255,107,53,0.1);
+  padding:22px;
+  transform:translateY(-20px) scale(0.96);opacity:0;
+  transition:all .4s cubic-bezier(.34,1.4,.64,1);
+  pointer-events:none;direction:rtl;
+}
+#pwa-push-prompt.show{transform:translateY(0) scale(1);opacity:1;pointer-events:all}
+.push-prompt-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.push-prompt-icon{
+  width:50px;height:50px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,107,53,0.12),rgba(255,184,48,0.12));
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;
+}
+.push-prompt-title{font-weight:800;font-size:16px;color:#1a1a1a;margin-bottom:2px}
+.push-prompt-sub{font-size:12px;color:#999}
+.push-prompt-body{font-size:13px;color:#666;line-height:1.75;margin-bottom:16px}
+.push-prompt-benefits{margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
+.push-benefit{display:flex;align-items:center;gap:8px;font-size:13px;color:#555}
+.push-benefit-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.push-prompt-actions{display:flex;gap:10px}
+.push-btn-allow{
+  flex:1;background:linear-gradient(135deg,#FF6B35,#FFB830);
+  color:#fff;border:none;padding:12px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 6px 20px rgba(255,107,53,0.3);
+  transition:transform .2s;
+}
+.push-btn-allow:hover{transform:translateY(-2px)}
+.push-btn-later{
+  background:rgba(0,0,0,0.06);color:#666;border:none;
+  padding:12px 16px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:background .2s;
+}
+.push-btn-later:hover{background:rgba(0,0,0,0.1)}
+
+/* ===== PWA — UPDATE TOAST ===== */
+#pwa-update-toast{
+  position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:#1a1a1a;color:#fff;border-radius:50px;
+  padding:12px 20px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;
+  display:flex;align-items:center;gap:10px;z-index:9000;
+  opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(0,0,0,0.25);
+}
+#pwa-update-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all}
+.pwa-update-btn{
+  background:linear-gradient(135deg,#FF6B35,#FFB830);color:#fff;
+  border:none;padding:6px 14px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;
+  cursor:pointer;white-space:nowrap;
+}
+
+/* ===== PWA — STATUS INDICATOR ===== */
+#pwa-offline-bar{
+  position:fixed;top:0;left:0;right:0;z-index:10000;
+  background:linear-gradient(135deg,#E84855,#c0392b);
+  color:#fff;text-align:center;padding:8px;
+  font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transform:translateY(-100%);transition:transform .3s;
+}
+#pwa-offline-bar.show{transform:translateY(0)}
+
+/* ===== PWA — BACK TO TOP adjustment ===== */
+.has-install-banner #backTop{ bottom: 106px; }
+
+@media(max-width:400px){
+  .pwa-banner-actions{flex-direction:column;gap:6px}
+  #pwa-push-prompt{right:10px;left:10px}
+}
+
+@media(max-width:900px){
+  .hero-inner{padding:84px 20px 50px}
+  .ff1,.ff2,.ff3,.ff4{font-size:36px}
+  .ff5,.ff6,.ff7,.ff8{font-size:26px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:26px}
+  nav{padding:0 18px}
+}
+@media(max-width:640px){
+  section{padding:55px 18px}
+  .stats-bar{margin:0 18px;grid-template-columns:repeat(2,1fr)}
+  .stat-item{border-left:none !important;padding:0 8px}
+  .stat-item:nth-child(odd){border-left:1px solid #f0f0f0 !important}
+  .hiw-grid::before{display:none}
+  .cta-box{padding:36px 20px}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column;gap:10px;text-align:center}
+  .cart-drawer{width:100vw}
+  #toast{right:14px;left:14px;bottom:18px;border-radius:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== CART OVERLAY ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- ===== CART DRAWER ===== -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title"><i class="fa-solid fa-bag-shopping" style="color:var(--org)"></i> سلة مشترياتك</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="promo-row">
+      <input class="promo-input" id="promoInput" type="text" placeholder="كود الخصم...">
+      <button class="promo-btn" onclick="applyPromo()">تطبيق</button>
+    </div>
+    <div class="summary-row"><span>المجموع الفرعي</span><span id="subtotalVal">0 د.ج</span></div>
+    <div class="summary-row"><span>التوصيل</span><span id="deliveryVal">مجاني 🎉</span></div>
+    <div class="summary-row summary-discount" id="discountRow" style="display:none">
+      <span>خصم الكود 🎁</span><span id="discountVal"></span>
+    </div>
+    <div class="summary-row total"><span>الإجمالي</span><span id="totalVal">0 د.ج</span></div>
+    <button class="checkout-btn" onclick="checkout()"><i class="fa-solid fa-lock"></i> إتمام الطلب الآن</button>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-inner grid grid-cols-3 items-center">
+
+    <!-- LEFT (أقصى اليسار): Shopping cart dropdown trigger -->
+    <div class="justify-self-start">
+      <div class="nav-cart-wrap relative">
+        <button
+          id="navCartBtn"
+          onclick="toggleCartDropdown(event)"
+          aria-haspopup="true"
+          aria-expanded="false"
+          title="سلة المشتريات"
+          class="relative flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full
+                 bg-org/[0.08] border-[1.5px] border-org/20 text-org
+                 hover:bg-org hover:text-white hover:border-org
+                 transition-all duration-200">
+          <i class="fa-solid fa-cart-shopping text-base md:text-lg"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CENTER: Logo (always perfectly centered) -->
+    <div class="justify-self-center">
+      <a href="#" class="logo">فروتز<span class="logo-dot">.</span></a>
+    </div>
+
+    <!-- RIGHT (أقصى اليمين): Menu (hamburger) far-right, Notifications next to it -->
+    <div class="justify-self-end flex items-center gap-2 md:gap-3">
+
+      <!-- Notifications dropdown trigger -->
+      <div class="relative">
+        <button
+          id="navBellBtn"
+          onclick="toggleBellDropdown(event)"
+          aria-haspopup="true"
+          aria-expanded="false"
+          title="الإشعارات"
+          class="relative flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full
+                 bg-org/[0.08] border-[1.5px] border-org/20 text-org
+                 hover:bg-org hover:text-white hover:border-org
+                 transition-all duration-200">
+          <i class="fa-regular fa-bell text-base md:text-lg"></i>
+        </button>
+
+        <!-- Notifications dropdown panel -->
+        <div id="bellDropdown"
+             class="dropdown-panel hidden absolute top-full mt-3 left-0
+                    w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-org/10
+                    p-4 text-right">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="font-extrabold text-sm text-dark">🔔 الإشعارات</h4>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="text-xs text-gray-500 leading-relaxed">
+              فعّل الإشعارات لتصلك أحدث العروض وتأكيدات الطلبات فوراً.
+            </p>
+            <button onclick="if(typeof fruitzRequestPush==='function') fruitzRequestPush(); closeAllDropdowns();"
+              class="mt-1 w-full bg-gradient-to-l from-org to-mango text-white font-extrabold
+                     text-sm rounded-full py-2.5 px-4 shadow-lg shadow-org/30
+                     hover:-translate-y-0.5 transition-transform">
+              تفعيل الإشعارات
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hamburger / main menu dropdown trigger -->
+      <div class="relative">
+        <button
+          id="navMenuBtn"
+          onclick="toggleMenuDropdown(event)"
+          aria-haspopup="true"
+          aria-expanded="false"
+          title="القائمة"
+          class="relative flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full
+                 bg-org/[0.08] border-[1.5px] border-org/20 text-org
+                 hover:bg-org hover:text-white hover:border-org
+                 transition-all duration-200">
+          <i class="fa-solid fa-bars text-base md:text-lg"></i>
+        </button>
+
+        <!-- Main navigation dropdown panel -->
+        <div id="menuDropdown"
+             class="dropdown-panel hidden absolute top-full mt-3 right-0
+                    w-56 bg-white rounded-2xl shadow-2xl border border-org/10
+                    p-2 text-right">
+          <ul class="flex flex-col gap-1 list-none">
+            <li><a href="#menu" onclick="closeAllDropdowns()" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-org/10 hover:text-org transition-colors">القائمة</a></li>
+            <li><a href="#hiw" onclick="closeAllDropdowns()" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-org/10 hover:text-org transition-colors">كيف يعمل</a></li>
+            <li><a href="#features" onclick="closeAllDropdowns()" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-org/10 hover:text-org transition-colors">مميزاتنا</a></li>
+            <li><a href="#reviews" onclick="closeAllDropdowns()" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-org/10 hover:text-org transition-colors">التقييمات</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ULTRA ===== -->
+<section class="hero" id="home">
+  <!-- Backgrounds -->
+  <div class="hero-mesh"></div>
+  <div class="hero-bg-photo" style="position:absolute;inset:0;z-index:0;background:url('https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=1400&h=900&fit=crop&auto=format&q=60') center/cover no-repeat;opacity:0.06;mix-blend-mode:luminosity"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Sparkles -->
+  <div class="sparkle sp1"></div>
+  <div class="sparkle sp2"></div>
+  <div class="sparkle sp3"></div>
+  <div class="sparkle sp4"></div>
+  <div class="sparkle sp5"></div>
+
+  <!-- Floating particles canvas -->
+  <div class="hero-particles" id="heroParticles"></div>
+
+  <!-- Floating fruits -->
+  <span class="ff ff1">🍋</span>
+  <span class="ff ff2">🍓</span>
+  <span class="ff ff3">🥝</span>
+  <span class="ff ff4">🍇</span>
+  <span class="ff ff5">🍍</span>
+  <span class="ff ff6">🍑</span>
+  <span class="ff ff7">🍊</span>
+  <span class="ff ff8">🥭</span>
+
+  <!-- Content: opens directly into text, no circle/apple/platter -->
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow">
+      <span class="bdot"></span>
+      <i class="fa-solid fa-bolt" style="font-size:11px"></i>&nbsp;توصيل خلال 45 دقيقة
+    </div>
+
+    <h1>
+      فاكهة طازجة<br>
+      <em data-text="مقطّعة بعناية">مقطّعة بعناية</em><br>
+      <span style="color:rgba(255,255,255,0.9)">تصل لبابك</span>
+    </h1>
+
+    <p class="hero-sub">أكواب فاكهة فاخرة من أجود الفواكه الموسمية المختارة يدوياً. بلا إضافات ولا مواد حافظة. فقط أحلى هبات الطبيعة، طازجة دائماً.</p>
+
+    <!-- Mini pill stats -->
+    <div class="hero-pills">
+      <div class="hero-pill"><i class="fa-solid fa-fire" style="color:#FF6B35;font-size:11px"></i>&nbsp;+50,000 طلب</div>
+      <div class="hero-pill"><i class="fa-solid fa-truck-fast" style="color:#FFB830;font-size:11px"></i>&nbsp;توصيل مجاني</div>
+      <div class="hero-pill"><i class="fa-solid fa-leaf" style="color:#5CB85C;font-size:11px"></i>&nbsp;100% طبيعي</div>
+    </div>
+
+    <div class="hero-btns">
+      <button class="btn-primary w-full sm:w-auto" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-basket-shopping" style="margin-left:7px"></i>اطلب الآن</button>
+      <button class="btn-outline w-full sm:w-auto" onclick="openCart()"><i class="fa-solid fa-bag-shopping"></i>سلة المشتريات</button>
+    </div>
+
+    <div class="hero-trust">
+      <div class="avatars">
+        <div class="av" style="background:linear-gradient(135deg,#FF6B35,#FF8C00)">س</div>
+        <div class="av" style="background:linear-gradient(135deg,#FFB830,#FF6B35)">م</div>
+        <div class="av" style="background:linear-gradient(135deg,#5CB85C,#2E8B57)">ر</div>
+        <div class="av" style="background:linear-gradient(135deg,#FF4D6D,#E84855)">ل</div>
+      </div>
+      <div class="trust-txt"><strong>+12,000</strong> عميل سعيد يثق بنا ⭐⭐⭐⭐⭐</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num"><span class="counter" data-target="50">0</span>K+</div><div class="stat-lbl"><i class="fa-solid fa-box-open" style="color:var(--org);margin-left:4px;font-size:11px"></i>طلب تم توصيله</div></div>
+  <div class="stat-item"><div class="stat-num"><span class="counter" data-target="12">0</span>K+</div><div class="stat-lbl"><i class="fa-solid fa-face-smile" style="color:var(--mango);margin-left:4px;font-size:11px"></i>عميل سعيد</div></div>
+  <div class="stat-item"><div class="stat-num"><span class="counter" data-target="25">0</span>+</div><div class="stat-lbl"><i class="fa-solid fa-apple-whole" style="color:var(--kiwi);margin-left:4px;font-size:11px"></i>نوع فاكهة</div></div>
+  <div class="stat-item"><div class="stat-num"><span class="counter" data-target="98">0</span>%</div><div class="stat-lbl"><i class="fa-solid fa-star" style="color:var(--wred);margin-left:4px;font-size:11px"></i>نسبة الرضا</div></div>
+</div>
+
+<!-- ===== PRODUCTS ===== -->
+<section class="prod-bg" id="menu" style="padding:55px 40px 72px">
+  <div class="sec-head tc">
+    <div class="stag"><i class="fa-solid fa-star" style="margin-left:6px"></i>قائمتنا</div>
+    <h2 class="sh2">اختر كوب الفاكهة المثالي</h2>
+    <p class="sub">كل كوب يُحضَّر طازجاً من فواكه موسمية مختارة، مقطعة بإتقان ومختومة للحفاظ على القيمة الغذائية والنكهة.</p>
+  </div>
+  <div class="prod-grid">
+
+    <div class="pc" data-id="1" data-name="كوب الجنة الاستوائية" data-price="1200" data-emoji="🥭">
+      <div class="pc-badge"><i class="fa-solid fa-fire" style="margin-left:4px"></i>الأكثر طلباً</div>
+      <div class="pc-img-real">
+        <img src="https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=220&fit=crop&crop=center&auto=format&q=75&fm=jpg" alt="كوب فاكهة استوائية" loading="lazy">
+        <div class="pc-img-overlay"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">كوب الجنة الاستوائية</div>
+        <div class="pc-desc">مانجو، كيوي، فراولة، أناناس — مزيج استوائي منعش</div>
+        <div class="pc-row">
+          <div class="pc-price">1,200 <span>د.ج</span></div>
+          <div class="pc-rating"><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i> 4.9</div>
+        </div>
+        <button class="pc-btn" onclick="addToCart(this)"><i class="fa-solid fa-plus" style="margin-left:6px"></i>أضف للسلة</button>
+      </div>
+    </div>
+
+    <div class="pc" data-id="2" data-name="كوب الانتعاش الصيفي" data-price="990" data-emoji="🍉">
+      <div class="pc-badge" style="background:var(--g3)"><i class="fa-solid fa-sun" style="margin-left:4px"></i>موسمي</div>
+      <div class="pc-img-real">
+        <img src="https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=400&h=220&fit=crop&crop=center&auto=format&q=75&fm=jpg" alt="كوب فاكهة صيفي" loading="lazy">
+        <div class="pc-img-overlay"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">كوب الانتعاش الصيفي</div>
+        <div class="pc-desc">بطيخ، شرائح برتقال، عنب أخضر وأحمر</div>
+        <div class="pc-row">
+          <div class="pc-price">990 <span>د.ج</span></div>
+          <div class="pc-rating"><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i> 4.8</div>
+        </div>
+        <button class="pc-btn" onclick="addToCart(this)"><i class="fa-solid fa-plus" style="margin-left:6px"></i>أضف للسلة</button>
+      </div>
+    </div>
+
+    <div class="pc" data-id="3" data-name="وعاء التوت الفجير" data-price="1350" data-emoji="🫐">
+      <div class="pc-badge" style="background:linear-gradient(135deg,#7B2FBE,#9B59B6)"><i class="fa-solid fa-heart" style="margin-left:4px"></i>صحي</div>
+      <div class="pc-img-real">
+        <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&h=220&fit=crop&crop=center&auto=format&q=75&fm=jpg" alt="وعاء توت" loading="lazy">
+        <div class="pc-img-overlay"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">وعاء التوت الفجير</div>
+        <div class="pc-desc">توت أزرق، فراولة، خوخ، مع رذاذ عسل طبيعي</div>
+        <div class="pc-row">
+          <div class="pc-price">1,350 <span>د.ج</span></div>
+          <div class="pc-rating"><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i> 5.0</div>
+        </div>
+        <button class="pc-btn" onclick="addToCart(this)"><i class="fa-solid fa-plus" style="margin-left:6px"></i>أضف للسلة</button>
+      </div>
+    </div>
+
+    <div class="pc" data-id="4" data-name="مزيج الحمضيات الذهبي" data-price="1100" data-emoji="🍍">
+      <div class="pc-img-real">
+        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=220&fit=crop&crop=center&auto=format&q=75&fm=jpg" alt="مزيج حمضيات" loading="lazy">
+        <div class="pc-img-overlay"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">مزيج الحمضيات الذهبي</div>
+        <div class="pc-desc">أناناس، مانجو، برتقال، بابايا مع قشر ليمون</div>
+        <div class="pc-row">
+          <div class="pc-price">1,100 <span>د.ج</span></div>
+          <div class="pc-rating"><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-solid fa-star stars"></i><i class="fa-regular fa-star stars"></i> 4.7</div>
+        </div>
+        <button class="pc-btn" onclick="addToCart(this)"><i class="fa-solid fa-plus" style="margin-left:6px"></i>أضف للسلة</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="feat-sec" id="features">
+  <div class="wrap">
+    <div class="sec-head tc">
+      <div class="stag" style="color:#FFB830">لماذا فروتز؟</div>
+      <h2 class="sh2">مهووسون بالجودة والطزاجة</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card"><span class="feat-ico" style="animation-delay:0s"><i class="fa-solid fa-seedling" style="background:linear-gradient(135deg,#5CB85C,#2E8B57);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"></i></span><div class="feat-title">100% طبيعي</div><div class="feat-desc">بلا مواد حافظة ولا إضافات. فقط فاكهة كاملة طازجة يقطعها فريقنا يومياً.</div></div>
+      <div class="feat-card"><span class="feat-ico" style="animation-delay:1s"><i class="fa-solid fa-bolt" style="background:linear-gradient(135deg,#FF6B35,#FFB830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"></i></span><div class="feat-title">توصيل فوري</div><div class="feat-desc">اطلب قبل الساعة الثانية ظهراً واستقبل طلبك خلال 45 دقيقة محفوظاً بالثلج.</div></div>
+      <div class="feat-card"><span class="feat-ico" style="animation-delay:2s"><i class="fa-solid fa-medal" style="background:linear-gradient(135deg,#FFB830,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"></i></span><div class="feat-title">جودة فاخرة</div><div class="feat-desc">نتعاون مع مزارع عضوية معتمدة لأجود الفواكه الموسمية في كل موسم.</div></div>
+      <div class="feat-card"><span class="feat-ico" style="animation-delay:3s"><i class="fa-solid fa-recycle" style="background:linear-gradient(135deg,#5CB85C,#2E8B57);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"></i></span><div class="feat-title">عبوات بيئية</div><div class="feat-desc">أكواب وعبوات قابلة للتحلل 100%. جيد لك، رائع للكوكب.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section id="hiw" style="padding:72px 40px;background:#fff">
+  <div class="wrap">
+    <div class="sec-head tc">
+      <div class="stag">بكل بساطة</div>
+      <h2 class="sh2">فاكهة طازجة في 3 خطوات</h2>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-step">
+        <div class="step-circle"><i class="fa-solid fa-bowl-food"></i></div>
+        <div class="step-t">اختر كوبك</div>
+        <div class="step-d">تصفح قائمتنا الموسمية واختر تشكيلتك المفضلة أو دعنا نفاجئك!</div>
+      </div>
+      <div class="hiw-step">
+        <div class="step-circle" style="background:var(--g2)"><i class="fa-solid fa-kitchen-set"></i></div>
+        <div class="step-t">نقطعها طازجة</div>
+        <div class="step-d">فريقنا يُحضّر طلبك فور استلامه. كل شريحة تُصنع لطلبك مباشرة.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="step-circle" style="background:var(--g3)"><i class="fa-solid fa-motorcycle"></i></div>
+        <div class="step-t">توصيل سريع</div>
+        <div class="step-d">أكوابك المبردة تصل لبابك خلال 45 دقيقة مع تتبع فوري.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testi-sec" id="reviews">
+  <div class="wrap">
+    <div class="sec-head tc">
+      <div class="stag"><i class="fa-solid fa-comments" style="margin-left:6px"></i>آراء عملائنا</div>
+      <h2 class="sh2">ماذا يقول عملاؤنا</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-top">
+          <img class="tav-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=120&h=120&fit=crop&crop=face&auto=format&q=75&fm=jpg" alt="سارة عمراني" loading="lazy">
+          <div>
+            <div class="tname">سارة عمراني</div>
+            <div class="trole"><i class="fa-solid fa-dumbbell" style="margin-left:4px;color:var(--org);font-size:10px"></i>مدربة عافية · وهران</div>
+          </div>
+        </div>
+        <div class="tstars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="tquote">«كوب الجنة الاستوائية هو طلبي اليومي. الفاكهة دائماً في قمة النضج والتوصيل مفاجئ في سرعته. أنا مدمنة عليه حقاً!»</div>
+        <div class="tverified"><i class="fa-solid fa-circle-check" style="color:var(--kiwi);font-size:12px;margin-left:4px"></i>عميلة موثقة</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top">
+          <img class="tav-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face&auto=format&q=75&fm=jpg" alt="كريم مزيان" loading="lazy">
+          <div>
+            <div class="tname">كريم مزيان</div>
+            <div class="trole"><i class="fa-solid fa-heart-pulse" style="margin-left:4px;color:var(--wred);font-size:10px"></i>مدرب لياقة · الجزائر</div>
+          </div>
+        </div>
+        <div class="tstars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="tquote">«كمهووس بالأكل الصحي، فروتز غيّر حياتي. فاكهة حقيقية بلا سكر مضاف. عملاؤي أيضاً يطلبون منه الآن!»</div>
+        <div class="tverified"><i class="fa-solid fa-circle-check" style="color:var(--kiwi);font-size:12px;margin-left:4px"></i>عميل موثق</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top">
+          <img class="tav-img" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face&auto=format&q=75&fm=jpg" alt="لينا بن سالم" loading="lazy">
+          <div>
+            <div class="tname">لينا بن سالم</div>
+            <div class="trole"><i class="fa-solid fa-pen-nib" style="margin-left:4px;color:var(--pink);font-size:10px"></i>مدوّنة طعام · قسنطينة</div>
+          </div>
+        </div>
+        <div class="tstars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="tquote">«وعاء التوت غيّر مفهومي للوجبات الخفيفة. تقديم رائع وطزاجة لا تصدق. كتبت عنه في مدونتي ثلاث مرات!»</div>
+        <div class="tverified"><i class="fa-solid fa-circle-check" style="color:var(--kiwi);font-size:12px;margin-left:4px"></i>عميلة موثقة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<div class="cta-wrap">
+  <div class="cta-box">
+    <h2>مستعد لتجربة الطزاجة الحقيقية؟</h2>
+    <p>أول طلب بخصم 20% — يُطبّق الخصم تلقائياً عند إتمام الطلب.</p>
+    <button class="btn-white" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-tag"></i> احجز خصمي 20% <i class="fa-solid fa-arrow-left" style="font-size:12px"></i></button>
+    <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:14px;margin-bottom:0;position:relative">توصيل مجاني لأول طلب. يمكنك الإلغاء في أي وقت.</p>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="logo" style="display:inline-block;margin-bottom:4px">فروتز<span class="logo-dot">.</span></a>
+      <p>أكواب فاكهة طازجة فاخرة توصل لبابك. محضّرة بعناية، موصّلة بسرعة.</p>
+      <div class="socials">
+        <div class="soc-btn" title="فيسبوك"><i class="fa-brands fa-facebook-f"></i></div>
+        <div class="soc-btn" title="إنستغرام"><i class="fa-brands fa-instagram"></i></div>
+        <div class="soc-btn" title="تيك توك"><i class="fa-brands fa-tiktok"></i></div>
+        <div class="soc-btn" title="واتساب"><i class="fa-brands fa-whatsapp"></i></div>
+      </div>
+      <div class="foot-newsletter">
+        <div class="foot-nl-label">اشترك للحصول على عروض</div>
+        <div class="foot-nl-row">
+          <button class="foot-nl-btn" onclick="showToast('✅ تم الاشتراك بنجاح!')"><i class="fa-solid fa-paper-plane" style="margin-left:5px"></i>اشترك</button>
+          <input class="foot-nl-input" type="email" placeholder="بريدك الإلكتروني...">
+        </div>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>القائمة</h4>
+      <a href="#">أكواب استوائية</a>
+      <a href="#">أوعية التوت</a>
+      <a href="#">مزيج الحمضيات</a>
+      <a href="#">الاختيارات الموسمية</a>
+      <a href="#">هدايا الفاكهة</a>
+    </div>
+    <div class="foot-col">
+      <h4>الشركة</h4>
+      <a href="#">من نحن</a>
+      <a href="#">مزارعنا</a>
+      <a href="#">المدونة</a>
+      <a href="#">الصحافة</a>
+      <a href="#">وظائف</a>
+    </div>
+    <div class="foot-col">
+      <h4>المساعدة</h4>
+      <a href="#">تتبع الطلب</a>
+      <a href="#">الأسئلة الشائعة</a>
+      <a href="#">تواصل معنا</a>
+      <a href="#">سياسة الاسترجاع</a>
+      <a href="#">الخصوصية</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 فروتز. جميع الحقوق محفوظة. صُنع بـ 🍊</span>
+    <div class="foot-links">
+      <a href="#">الشروط</a>
+      <a href="#">الخصوصية</a>
+      <a href="#">الكوكيز</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== PWA — OFFLINE BAR ===== -->
+<div id="pwa-offline-bar">
+  <span>📡</span>
+  <span>أنت غير متصل بالإنترنت — السلة محفوظة محلياً</span>
+</div>
+
+<!-- ===== PWA — INSTALL BANNER ===== -->
+<div id="pwa-install-banner" role="dialog" aria-label="تثبيت تطبيق فروتز">
+  <div class="pwa-banner-icon">🍊</div>
+  <div class="pwa-banner-text">
+    <div class="pwa-banner-title">ثبّت تطبيق فروتز</div>
+    <div class="pwa-banner-sub">تجربة أسرع وأجمل مباشرة من شاشتك الرئيسية</div>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="pwa-btn-install" id="pwa-btn-install-confirm">🚀 ثبّت</button>
+    <button class="pwa-btn-dismiss" id="pwa-btn-install-dismiss" aria-label="إغلاق">✕</button>
+  </div>
+</div>
+
+<!-- ===== PWA — PUSH NOTIFICATION PROMPT ===== -->
+<div id="pwa-push-prompt" role="dialog" aria-label="تفعيل الإشعارات">
+  <div class="push-prompt-head">
+    <div class="push-prompt-icon">🔔</div>
+    <div>
+      <div class="push-prompt-title">فعّل الإشعارات</div>
+      <div class="push-prompt-sub">ابقَ على اطلاع دائم</div>
+    </div>
+  </div>
+  <div class="push-prompt-benefits">
+    <div class="push-benefit">
+      <div class="push-benefit-dot" style="background:#FF6B35"></div>
+      <span>عروض حصرية وخصومات يومية</span>
+    </div>
+    <div class="push-benefit">
+      <div class="push-benefit-dot" style="background:#5CB85C"></div>
+      <span>تتبع طلبك لحظة بلحظة</span>
+    </div>
+    <div class="push-benefit">
+      <div class="push-benefit-dot" style="background:#FFB830"></div>
+      <span>فواكه موسمية جديدة كل أسبوع</span>
+    </div>
+    <div class="push-benefit">
+      <div class="push-benefit-dot" style="background:#E84855"></div>
+      <span>سلتك محفوظة — لا تفوّت طلبك</span>
+    </div>
+  </div>
+  <div class="push-prompt-actions">
+    <button class="push-btn-allow"  id="push-btn-allow">🔔 تفعيل الإشعارات</button>
+    <button class="push-btn-later"  id="push-btn-later">لاحقاً</button>
+  </div>
+</div>
+
+<!-- ===== PWA — UPDATE TOAST ===== -->
+<div id="pwa-update-toast">
+  <span>✨ نسخة جديدة متاحة!</span>
+  <button class="pwa-update-btn" id="pwa-update-btn">تحديث</button>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى" style="position:fixed;bottom:86px;left:22px;width:44px;height:44px;border-radius:50%;background:var(--g1);border:none;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 6px 20px rgba(255,107,53,0.4);opacity:0;transform:translateY(10px);transition:all .3s;z-index:200;display:flex;align-items:center;justify-content:center">↑</button>
+
+
+<script>
+'use strict';
+/* ============================================================
+   CART — localStorage key
+============================================================ */
+var CART_KEY = 'fruitz_cart_v2';
+var PROMOS = { 'FRUITZ20': 20, 'WELCOME': 15, 'FRESH10': 10 };
+var cart = [];
+var promo = null;
+
+function loadCart() {
+  try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch(e) { cart = []; }
+}
+
+function saveCart() {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e) {}
+}
+
+function findItem(id) {
+  return cart.find(function(i){ return i.id === id; });
+}
+
+/* ============================================================
+   ADD / CHANGE / REMOVE
+============================================================ */
+function addToCart(btn) {
+  var card  = btn.closest('[data-id]');
+  var id    = card.dataset.id;
+  var name  = card.dataset.name;
+  var price = parseInt(card.dataset.price, 10);
+  var emoji = card.dataset.emoji;
+  var item  = findItem(id);
+  if (item) { item.qty++; }
+  else { cart.push({ id:id, name:name, price:price, emoji:emoji, qty:1 }); }
+  saveCart();
+  updateBadge(true);
+  renderIfOpen();
+  showToast('🛒 ' + name + ' أُضيف للسلة!');
+  btn.textContent = '✓ أُضيف!';
+  btn.classList.add('added');
+  var b = btn;
+  setTimeout(function(){ b.textContent = '+ أضف للسلة'; b.classList.remove('added'); }, 1800);
+}
+
+function changeQty(id, delta) {
+  var item = findItem(id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { cart = cart.filter(function(i){ return i.id !== id; }); }
+  saveCart();
+  renderCart();
+  updateBadge(false);
+}
+
+function removeItem(id) {
+  cart = cart.filter(function(i){ return i.id !== id; });
+  saveCart();
+  renderCart();
+  updateBadge(false);
+}
+
+/* ============================================================
+   RENDER CART
+============================================================ */
+function renderCart() {
+  var el = document.getElementById('cartItems');
+  var ft = document.getElementById('cartFooter');
+  if (!el) return;
+
+  if (cart.length === 0) {
+    ft.style.display = 'none';
+    el.innerHTML = '<div class="cart-empty">'
+      + '<div class="cart-empty-icon">🍉</div>'
+      + '<h3>سلتك فارغة!</h3>'
+      + '<p>أضف كوب فاكهة لذيذ<br>واستمتع بالطزاجة الحقيقية</p>'
+      + '<button class="btn-primary" onclick="closeCart();document.getElementById(\'menu\').scrollIntoView({behavior:\'smooth\'})" style="margin-top:8px">اكتشف قائمتنا 🌿</button>'
+      + '</div>';
+    return;
+  }
+
+  ft.style.display = 'block';
+  var html = '';
+  cart.forEach(function(item) {
+    html += '<div class="cart-item">'
+      + '<div class="cart-item-emoji">' + item.emoji + '</div>'
+      + '<div class="cart-item-info">'
+      +   '<div class="cart-item-name">' + item.name + '</div>'
+      +   '<div class="cart-item-price">' + (item.price * item.qty).toLocaleString('ar-DZ') + ' د.ج</div>'
+      +   '<div class="cart-item-controls">'
+      +     '<button class="qty-btn" onclick="changeQty(\'' + item.id + '\',-1)">−</button>'
+      +     '<span class="qty-num">' + item.qty + '</span>'
+      +     '<button class="qty-btn" onclick="changeQty(\'' + item.id + '\',1)">+</button>'
+      +   '</div>'
+      + '</div>'
+      + '<button class="cart-item-del" onclick="removeItem(\'' + item.id + '\')" title="حذف"><span style="font-size:13px">&#128465;</span></button>'
+      + '</div>';
+  });
+  el.innerHTML = html;
+  updateTotals();
+}
+
+function renderIfOpen() {
+  if (document.getElementById('cartDrawer').classList.contains('open')) renderCart();
+}
+
+function updateTotals() {
+  var sub = cart.reduce(function(s,i){ return s + i.price * i.qty; }, 0);
+  var dis = promo ? Math.round(sub * promo.pct / 100) : 0;
+  var tot = sub - dis;
+  var delEl = document.getElementById('deliveryVal');
+  var disRow = document.getElementById('discountRow');
+  var disVal = document.getElementById('discountVal');
+  document.getElementById('subtotalVal').textContent = sub.toLocaleString('ar-DZ') + ' د.ج';
+  document.getElementById('totalVal').textContent    = tot.toLocaleString('ar-DZ') + ' د.ج';
+  if (sub >= 2000) { delEl.textContent = 'مجاني 🎉'; delEl.style.color = '#5CB85C'; }
+  else { delEl.textContent = '200 د.ج'; delEl.style.color = ''; }
+  if (promo) { disRow.style.display = 'flex'; disVal.textContent = '−' + dis.toLocaleString('ar-DZ') + ' د.ج'; }
+  else { disRow.style.display = 'none'; }
+}
+
+/* ============================================================
+   PROMO
+============================================================ */
+function applyPromo() {
+  var inp = document.getElementById('promoInput');
+  var code = inp.value.trim();
+  var pct = PROMOS[code] || PROMOS[code.toUpperCase()];
+  if (pct) {
+    promo = { code: code, pct: pct };
+    updateTotals();
+    showToast('🎁 خصم ' + pct + '% تم تطبيقه!');
+    inp.style.borderColor = '#5CB85C';
+    inp.value = '✓ ' + code;
+    inp.disabled = true;
+  } else {
+    showToast('❌ كود الخصم غير صحيح');
+    inp.style.borderColor = '#E84855';
+    setTimeout(function(){ inp.style.borderColor = ''; }, 2000);
+  }
+}
+
+/* ============================================================
+   OPEN / CLOSE
+============================================================ */
+function openCart() {
+  renderCart();
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ============================================================
+   BADGE
+============================================================ */
+function updateBadge(bump) {
+  var badge = document.getElementById('cartBadge');
+  var total = cart.reduce(function(s,i){ return s + i.qty; }, 0);
+  if (total > 0) {
+    badge.style.display = 'flex';
+    badge.textContent = total > 99 ? '99+' : total;
+    if (bump) {
+      badge.classList.remove('bump');
+      void badge.offsetWidth;
+      badge.classList.add('bump');
+    }
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   CHECKOUT (demo)
+============================================================ */
+function checkout() {
+  if (cart.length === 0) return;
+  showToast('✅ جارٍ معالجة طلبك… شكراً!');
+  setTimeout(function() {
+    cart = []; promo = null;
+    var inp = document.getElementById('promoInput');
+    inp.value = ''; inp.disabled = false; inp.style.borderColor = '';
+    saveCart();
+    renderCart();
+    updateBadge(false);
+    closeCart();
+  }, 1900);
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+var toastTimer = null;
+function showToast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove('show'); }, 2800);
+}
+
+/* ============================================================
+   ANIMATED COUNTERS
+============================================================ */
+function animateCounter(el) {
+  var target = +el.dataset.target, dur = 2200, start = performance.now();
+  function update(now) {
+    var pct = Math.min((now - start) / dur, 1);
+    var ease = 1 - Math.pow(1 - pct, 3);
+    el.textContent = Math.round(target * ease);
+    if (pct < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+var cObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(animateCounter);
+      cObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+var sb = document.querySelector('.stats-bar');
+if (sb) cObs.observe(sb);
+
+/* ============================================================
+   3D CARD TILT
+============================================================ */
+document.querySelectorAll('.pc').forEach(function(card) {
+  card.addEventListener('mousemove', function(e) {
+    var r = card.getBoundingClientRect();
+    var x = ((e.clientX - r.left) / r.width  - 0.5) * 14;
+    var y = ((e.clientY - r.top)  / r.height - 0.5) * -14;
+    card.style.transform = 'translateY(-7px) rotateX(' + y + 'deg) rotateY(' + x + 'deg)';
+    card.style.transformStyle = 'preserve-3d';
+  });
+  card.addEventListener('mouseleave', function() {
+    card.style.transform = '';
+    card.style.transformStyle = '';
+  });
+});
+
+/* ============================================================
+   PARALLAX BLOBS
+============================================================ */
+window.addEventListener('scroll', function() {
+  var sy = window.scrollY;
+  document.querySelectorAll('.blob').forEach(function(b, i) {
+    b.style.transform = 'translateY(' + (sy * (0.18 + i * 0.07)) + 'px)';
+  });
+}, { passive: true });
+
+/* ============================================================
+   HERO — FLOATING PARTICLES
+============================================================ */
+(function() {
+  var container = document.getElementById('heroParticles');
+  if (!container) return;
+  var colors = ['#FF6B35','#FFB830','#FF4D6D','#5CB85C','#fff'];
+  var sizes  = [3, 4, 5, 6, 4, 3];
+  var count  = window.innerWidth < 600 ? 18 : 36;
+
+  for (var i = 0; i < count; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    var size = sizes[Math.floor(Math.random() * sizes.length)];
+    var color = colors[Math.floor(Math.random() * colors.length)];
+    var left = Math.random() * 100;
+    var dur  = 8 + Math.random() * 16;
+    var del  = Math.random() * 12;
+    p.style.cssText = [
+      'width:' + size + 'px',
+      'height:' + size + 'px',
+      'background:' + color,
+      'opacity:' + (0.15 + Math.random() * 0.35),
+      'left:' + left + '%',
+      'bottom:-20px',
+      'animation-duration:' + dur + 's',
+      'animation-delay:-' + del + 's'
+    ].join(';');
+    container.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   HERO — CURSOR GLOW TRAIL
+============================================================ */
+(function() {
+  var hero = document.getElementById('home');
+  if (!hero || window.innerWidth < 900) return;
+  var glow = document.createElement('div');
+  glow.style.cssText = 'position:absolute;width:300px;height:300px;border-radius:50%;pointer-events:none;z-index:2;transition:transform .15s ease,opacity .3s;opacity:0;background:radial-gradient(circle,rgba(255,107,53,0.12) 0%,transparent 70%);transform:translate(-50%,-50%)';
+  hero.style.position = 'relative';
+  hero.appendChild(glow);
+  hero.addEventListener('mousemove', function(e) {
+    var r = hero.getBoundingClientRect();
+    glow.style.opacity = '1';
+    glow.style.left = (e.clientX - r.left) + 'px';
+    glow.style.top  = (e.clientY - r.top)  + 'px';
+  });
+  hero.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
+})();
+
+/* ============================================================
+   SCROLL — HERO PARALLAX (enhanced)
+============================================================ */
+window.addEventListener('scroll', function() {
+  var sy = window.scrollY;
+
+  /* Orbs parallax */
+  var orbs = document.querySelectorAll('.orb');
+  orbs.forEach(function(o, i) {
+    var speed = 0.12 + i * 0.06;
+    o.style.transform = 'translateY(' + (sy * speed) + 'px)';
+  });
+
+  /* Grid drift speed boost */
+  var grid = document.querySelector('.hero-grid');
+  if (grid) grid.style.backgroundPositionY = (sy * 0.3) + 'px';
+
+  /* Floating fruits mild parallax */
+  var ffs = document.querySelectorAll('.ff');
+  ffs.forEach(function(f, i) {
+    var speed = 0.05 + (i % 3) * 0.04;
+    f.style.marginTop = (sy * speed) + 'px';
+  });
+
+  /* Nav shadow */
+  var nav = document.querySelector('nav');
+  if (nav) nav.style.boxShadow = sy > 60 ? '0 4px 30px rgba(0,0,0,0.15)' : 'none';
+}, { passive: true });
+
+/* ============================================================
+   STATS — ANIMATED COUNTERS (Intersection Observer)
+============================================================ */
+function animateCounter(el) {
+  var target = +el.dataset.target, dur = 2200, start = performance.now();
+  function update(now) {
+    var pct = Math.min((now - start) / dur, 1);
+    var ease = 1 - Math.pow(1 - pct, 3);
+    el.textContent = Math.round(target * ease);
+    if (pct < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+(function() {
+  var sb = document.querySelector('.stats-bar');
+  if (!sb) return;
+  var done = false;
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !done) {
+      done = true;
+      sb.querySelectorAll('.counter').forEach(animateCounter);
+    }
+  }, { threshold: 0.4 });
+  obs.observe(sb);
+})();
+
+/* ============================================================
+   PRODUCT CARDS — 3D TILT
+============================================================ */
+document.querySelectorAll('.pc').forEach(function(card) {
+  card.addEventListener('mousemove', function(e) {
+    var r = card.getBoundingClientRect();
+    var x = ((e.clientX - r.left) / r.width  - 0.5) * 16;
+    var y = ((e.clientY - r.top)  / r.height - 0.5) * -16;
+    card.style.transform = 'translateY(-8px) rotateX(' + y + 'deg) rotateY(' + x + 'deg)';
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'none';
+  });
+  card.addEventListener('mouseleave', function() {
+    card.style.transform = '';
+    card.style.transformStyle = '';
+    card.style.transition = 'transform .35s ease, box-shadow .35s ease';
+  });
+});
+
+/* ============================================================
+   SCROLL REVEAL — sections
+============================================================ */
+(function() {
+  var targets = document.querySelectorAll('.sec-head,.prod-grid,.feat-grid,.hiw-grid,.testi-grid');
+  if (!targets.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(function(t) { obs.observe(t); });
+})();
+
+/* ============================================================
+   PRODUCT CARDS — staggered entrance
+============================================================ */
+(function() {
+  var cards = document.querySelectorAll('.pc');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(function(c, i) {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(40px)';
+    c.style.transition = 'opacity .6s ease ' + (i * 0.12) + 's, transform .6s ease ' + (i * 0.12) + 's';
+    obs.observe(c);
+  });
+})();
+
+/* ============================================================
+   FEATURE CARDS — staggered entrance
+============================================================ */
+(function() {
+  var cards = document.querySelectorAll('.feat-card');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0) scale(1)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(function(c, i) {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(50px) scale(0.96)';
+    c.style.transition = 'opacity .7s ease ' + (i * 0.15) + 's, transform .7s cubic-bezier(.34,.7,.5,1) ' + (i * 0.15) + 's';
+    obs.observe(c);
+  });
+})();
+
+/* ============================================================
+   TESTIMONIAL CARDS — staggered entrance
+============================================================ */
+(function() {
+  var cards = document.querySelectorAll('.testi-card');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(function(c, i) {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(36px)';
+    c.style.transition = 'opacity .65s ease ' + (i * 0.18) + 's, transform .65s ease ' + (i * 0.18) + 's';
+    obs.observe(c);
+  });
+})();
+
+/* ============================================================
+   HOW IT WORKS — step circles bounce in
+============================================================ */
+(function() {
+  var steps = document.querySelectorAll('.hiw-step');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  steps.forEach(function(s, i) {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(40px)';
+    s.style.transition = 'opacity .7s ease ' + (i * 0.2) + 's, transform .7s cubic-bezier(.34,1.4,.64,1) ' + (i * 0.2) + 's';
+    obs.observe(s);
+  });
+})();
+
+/* ============================================================
+   CTA BANNER — pulse effect
+============================================================ */
+(function() {
+  var cta = document.querySelector('.cta-box');
+  if (!cta) return;
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      cta.style.opacity = '1';
+      cta.style.transform = 'translateY(0) scale(1)';
+      obs.unobserve(cta);
+    }
+  }, { threshold: 0.2 });
+  cta.style.opacity = '0';
+  cta.style.transform = 'translateY(30px) scale(0.98)';
+  cta.style.transition = 'opacity .8s ease, transform .8s cubic-bezier(.34,1.3,.64,1)';
+  obs.observe(cta);
+})();
+
+/* ============================================================
+   STATS BAR — slide up entrance
+============================================================ */
+(function() {
+  var sb = document.querySelector('.stats-bar');
+  if (!sb) return;
+  sb.style.opacity = '0';
+  sb.style.transform = 'translateY(20px)';
+  sb.style.transition = 'opacity .6s ease .2s, transform .6s ease .2s';
+  setTimeout(function() {
+    sb.style.opacity = '1';
+    sb.style.transform = 'translateY(-34px)';
+  }, 300);
+})();
+
+/* ============================================================
+   BACK TO TOP BUTTON
+============================================================ */
+(function() {
+  var btn = document.getElementById('backTop');
+  if (!btn) return;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) {
+      btn.style.opacity = '1';
+      btn.style.transform = 'translateY(0)';
+    } else {
+      btn.style.opacity = '0';
+      btn.style.transform = 'translateY(10px)';
+    }
+  }, { passive: true });
+})();
+
+
+/* ============================================================
+   PWA — SERVICE WORKER REGISTRATION
+============================================================ */
+(function() {
+  if (!('serviceWorker' in navigator)) return;
+
+  var newWorker = null;
+
+  navigator.serviceWorker.register('sw.js', { scope: '/' })
+    .then(function(reg) {
+      console.log('[PWA] Service Worker registered:', reg.scope);
+
+      /* استمع لتحديثات جديدة */
+      reg.addEventListener('updatefound', function() {
+        newWorker = reg.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', function() {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            showUpdateToast();
+          }
+        });
+      });
+
+      /* Background Sync - مزامنة السلة */
+      if ('sync' in reg) {
+        window.addEventListener('online', function() {
+          reg.sync.register('sync-cart').catch(function(){});
+        });
+      }
+    })
+    .catch(function(err) {
+      console.warn('[PWA] Service Worker registration failed:', err);
+    });
+
+  /* عند تفعيل Service Worker الجديد → أعد تحميل الصفحة */
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    if (!event.data) return;
+    if (event.data.type === 'RELOAD_PAGE') {
+      window.location.reload();
+    }
+  });
+
+  /* زر التحديث */
+  var updateBtn = document.getElementById('pwa-update-btn');
+  if (updateBtn) {
+    updateBtn.addEventListener('click', function() {
+      if (newWorker) {
+        newWorker.postMessage({ type: 'SKIP_WAITING' });
+      }
+      window.location.reload();
+    });
+  }
+
+  function showUpdateToast() {
+    var toast = document.getElementById('pwa-update-toast');
+    if (toast) toast.classList.add('show');
+  }
+
+  /* Offline / Online detection */
+  function updateOnlineStatus() {
+    var bar = document.getElementById('pwa-offline-bar');
+    if (!bar) return;
+    if (!navigator.onLine) {
+      bar.classList.add('show');
+      document.body.style.paddingTop = '42px';
+    } else {
+      bar.classList.remove('show');
+      document.body.style.paddingTop = '';
+    }
+  }
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+})();
+
+/* ============================================================
+   PWA — INSTALL PROMPT (A2HS)
+============================================================ */
+(function() {
+  var deferredPrompt = null;
+  var banner = document.getElementById('pwa-install-banner');
+  var installBtn = document.getElementById('pwa-btn-install-confirm');
+  var dismissBtn = document.getElementById('pwa-btn-install-dismiss');
+
+  /* هل أُغلق من قبل؟ */
+  var dismissed = localStorage.getItem('fruitz_pwa_install_dismissed');
+  var installed  = localStorage.getItem('fruitz_pwa_installed');
+  if (dismissed || installed) return;
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    /* أظهر البانر بعد 3 ثوانٍ */
+    setTimeout(function() {
+      if (banner) banner.classList.add('show');
+    }, 3000);
+  });
+
+  window.addEventListener('appinstalled', function() {
+    localStorage.setItem('fruitz_pwa_installed', '1');
+    if (banner) banner.classList.remove('show');
+    showToast('🎉 تم تثبيت فروتز! ابحث عنه على شاشتك الرئيسية');
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', function() {
+      if (!deferredPrompt) return;
+      banner.classList.remove('show');
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(choice) {
+        if (choice.outcome === 'accepted') {
+          localStorage.setItem('fruitz_pwa_installed', '1');
+          showToast('🎊 يتم تثبيت فروتز…');
+        }
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  if (dismissBtn) {
+    dismissBtn.addEventListener('click', function() {
+      banner.classList.remove('show');
+      localStorage.setItem('fruitz_pwa_install_dismissed', '1');
+    });
+  }
+})();
+
+/* ============================================================
+   PWA — PUSH NOTIFICATIONS
+============================================================ */
+(function() {
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) return;
+
+  var prompt = document.getElementById('pwa-push-prompt');
+  var allowBtn = document.getElementById('push-btn-allow');
+  var laterBtn = document.getElementById('push-btn-later');
+  var pushKey  = 'fruitz_push_asked';
+
+  /* أظهر البرومت بعد 8 ثوانٍ إذا لم يُسأل من قبل */
+  if (!localStorage.getItem(pushKey) && Notification.permission === 'default') {
+    setTimeout(function() {
+      if (prompt) prompt.classList.add('show');
+    }, 8000);
+  }
+
+  if (allowBtn) {
+    allowBtn.addEventListener('click', function() {
+      if (prompt) prompt.classList.remove('show');
+      localStorage.setItem(pushKey, '1');
+      requestPushPermission();
+    });
+  }
+
+  if (laterBtn) {
+    laterBtn.addEventListener('click', function() {
+      if (prompt) prompt.classList.remove('show');
+      /* اسأل مرة أخرى بعد 24 ساعة */
+      setTimeout(function() { localStorage.removeItem(pushKey); }, 86400000);
+    });
+  }
+
+  function requestPushPermission() {
+    Notification.requestPermission().then(function(permission) {
+      if (permission === 'granted') {
+        showToast('🔔 تم تفعيل الإشعارات! ستصلك عروض فروتز الحصرية');
+        subscribeToPush();
+        /* Demo: أرسل إشعار ترحيبي */
+        setTimeout(function() { sendDemoNotification(); }, 2000);
+      } else if (permission === 'denied') {
+        showToast('ℹ️ يمكنك تفعيل الإشعارات لاحقاً من إعدادات المتصفح');
+      }
+    });
+  }
+
+  function subscribeToPush() {
+    navigator.serviceWorker.ready.then(function(reg) {
+      /* في بيئة إنتاجية: استخدم VAPID keys حقيقية */
+      var vapidPublicKey = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDkBNnVFVVFVVFVVFVVFVVFVVFVVFVFVFVVFV';
+      try {
+        var convertedKey = urlBase64ToUint8Array(vapidPublicKey);
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedKey
+        });
+      } catch(e) {
+        console.log('[PWA] Push subscription (demo mode):', e.message);
+      }
+    }).catch(function(e) {
+      console.log('[PWA] Push subscription unavailable (demo mode)');
+    });
+  }
+
+  function sendDemoNotification() {
+    if (Notification.permission !== 'granted') return;
+    navigator.serviceWorker.ready.then(function(reg) {
+      reg.showNotification('مرحباً بك في فروتز! 🍊', {
+        body: 'استخدم كود FRUITZ20 للحصول على خصم 20% على أول طلب',
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🍊</text></svg>',
+        badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🍊</text></svg>',
+        tag: 'fruitz-welcome',
+        data: { url: '/' },
+        actions: [
+          { action: 'view',    title: '🛒 اطلب الآن' },
+          { action: 'dismiss', title: '✕ لاحقاً'   }
+        ],
+        dir: 'rtl',
+        lang: 'ar',
+        vibrate: [200, 100, 200]
+      });
+    });
+  }
+
+  function urlBase64ToUint8Array(base64String) {
+    var padding  = '='.repeat((4 - base64String.length % 4) % 4);
+    var base64   = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    var rawData  = window.atob(base64);
+    var output   = new Uint8Array(rawData.length);
+    for (var i = 0; i < rawData.length; ++i) output[i] = rawData.charCodeAt(i);
+    return output;
+  }
+
+  /* زر الاشتراك يدوياً في الـ nav (اختياري) */
+  window.fruitzRequestPush = requestPushPermission;
+
+  /* دالة عامة لإرسال إشعار تجريبي من الواجهة */
+  window.fruitzSendTestPush = function(title, body) {
+    if (Notification.permission !== 'granted') {
+      requestPushPermission();
+      return;
+    }
+    navigator.serviceWorker.ready.then(function(reg) {
+      reg.showNotification(title || 'فروتز 🍊', {
+        body: body || 'هذا إشعار تجريبي من فروتز!',
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🍊</text></svg>',
+        tag: 'fruitz-test-' + Date.now(),
+        dir: 'rtl', lang: 'ar',
+        vibrate: [100, 50, 100]
+      });
+    });
+  };
+
+  /* إشعار تلقائي عند إضافة منتج للسلة (بعد 30 ثانية من آخر إضافة) */
+  var cartReminderTimer = null;
+  var originalAddToCart = window.addToCart;
+  if (originalAddToCart) {
+    window.addToCart = function(btn) {
+      originalAddToCart.call(this, btn);
+      /* ذكّر المستخدم بإتمام الطلب */
+      clearTimeout(cartReminderTimer);
+      if (Notification.permission === 'granted') {
+        cartReminderTimer = setTimeout(function() {
+          var cartLen = cart ? cart.length : 0;
+          if (cartLen > 0) {
+            navigator.serviceWorker.ready.then(function(reg) {
+              reg.showNotification('سلتك في انتظارك! 🛒', {
+                body: 'لديك ' + cartLen + ' منتج في سلتك. أكمل طلبك الآن!',
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🛒</text></svg>',
+                tag: 'fruitz-cart-reminder',
+                data: { url: '/' },
+                actions: [{ action: 'view', title: '✅ إتمام الطلب' }],
+                dir: 'rtl', lang: 'ar'
+              });
+            });
+          }
+        }, 30000);
+      }
+    };
+  }
+})();
+
+/* ============================================================
+   PWA — CHECKOUT إشعار تأكيد الطلب
+============================================================ */
+(function() {
+  var origCheckout = window.checkout;
+  if (!origCheckout) return;
+
+  window.checkout = function() {
+    origCheckout.call(this);
+    /* أرسل إشعار تأكيد */
+    if (Notification.permission === 'granted') {
+      setTimeout(function() {
+        navigator.serviceWorker.ready.then(function(reg) {
+          reg.showNotification('طلبك قيد التحضير 🍊', {
+            body: 'شكراً! فريقنا يُحضّر كوبك الطازج وسيصل خلال 45 دقيقة 🚴',
+            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🍊</text></svg>',
+            tag: 'fruitz-order-confirm',
+            requireInteraction: false,
+            dir: 'rtl', lang: 'ar',
+            vibrate: [200, 50, 200, 50, 200]
+          });
+        });
+      }, 2000);
+    }
+  };
+})();
+
+/* ============================================================
+   NAV DROPDOWNS — Cart / Bell / Menu
+   Mutually exclusive: opening one closes the others.
+   Click-outside closes any open dropdown.
+============================================================ */
+(function(){
+  var bell = document.getElementById('bellDropdown');
+  var menu = document.getElementById('menuDropdown');
+
+  function isCartOpen(){
+    var d = document.getElementById('cartDrawer');
+    return d && d.classList.contains('open');
+  }
+
+  function setExpanded(btnId, expanded){
+    var btn = document.getElementById(btnId);
+    if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+
+  function hidePanel(panel, btnId){
+    if (!panel) return;
+    panel.classList.add('hidden');
+    setExpanded(btnId, false);
+  }
+
+  function showPanel(panel, btnId){
+    if (!panel) return;
+    panel.classList.remove('hidden');
+    setExpanded(btnId, true);
+  }
+
+  /* Close everything: bell, menu, and the cart drawer */
+  window.closeAllDropdowns = function(){
+    hidePanel(bell, 'navBellBtn');
+    hidePanel(menu, 'navMenuBtn');
+    if (isCartOpen()) closeCart();
+  };
+
+  window.toggleBellDropdown = function(e){
+    if (e) e.stopPropagation();
+    var willOpen = bell && bell.classList.contains('hidden');
+    /* Close cart + menu first so nothing overlaps */
+    hidePanel(menu, 'navMenuBtn');
+    if (isCartOpen()) closeCart();
+    if (willOpen) showPanel(bell, 'navBellBtn');
+    else hidePanel(bell, 'navBellBtn');
+  };
+
+  window.toggleMenuDropdown = function(e){
+    if (e) e.stopPropagation();
+    var willOpen = menu && menu.classList.contains('hidden');
+    /* Close cart + bell first so nothing overlaps */
+    hidePanel(bell, 'navBellBtn');
+    if (isCartOpen()) closeCart();
+    if (willOpen) showPanel(menu, 'navMenuBtn');
+    else hidePanel(menu, 'navMenuBtn');
+  };
+
+  /* Cart uses the existing full drawer (.cart-drawer / .cart-overlay).
+     Wrap it so it also closes bell + menu dropdowns. */
+  window.toggleCartDropdown = function(e){
+    if (e) e.stopPropagation();
+    hidePanel(bell, 'navBellBtn');
+    hidePanel(menu, 'navMenuBtn');
+    if (isCartOpen()) {
+      closeCart();
+    } else {
+      openCart();
+      setExpanded('navCartBtn', true);
+    }
+  };
+
+  /* Click-outside-to-close for bell + menu dropdowns */
+  document.addEventListener('click', function(e){
+    if (bell && !bell.classList.contains('hidden')) {
+      if (!bell.contains(e.target) && e.target.id !== 'navBellBtn' && !document.getElementById('navBellBtn').contains(e.target)) {
+        hidePanel(bell, 'navBellBtn');
+      }
+    }
+    if (menu && !menu.classList.contains('hidden')) {
+      if (!menu.contains(e.target) && e.target.id !== 'navMenuBtn' && !document.getElementById('navMenuBtn').contains(e.target)) {
+        hidePanel(menu, 'navMenuBtn');
+      }
+    }
+  });
+
+  /* Keep aria-expanded in sync + close bell/menu if cart opens via other triggers
+     (e.g. the hero "سلة المشتريات" button calls openCart() directly) */
+  var origOpenCart = window.openCart;
+  window.openCart = function(){
+    hidePanel(bell, 'navBellBtn');
+    hidePanel(menu, 'navMenuBtn');
+    origOpenCart();
+    setExpanded('navCartBtn', true);
+  };
+  var origCloseCart = window.closeCart;
+  window.closeCart = function(){
+    origCloseCart();
+    setExpanded('navCartBtn', false);
+  };
+
+  /* Escape closes all */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') window.closeAllDropdowns();
+  });
+})();
+
+/* ============================================================
+   INIT
+============================================================ */
+loadCart();
+updateBadge(false);
+
+</script>
+</body>
+</html>

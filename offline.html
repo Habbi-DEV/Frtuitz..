@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فروتز — غير متصل بالإنترنت</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:linear-gradient(145deg,#FFFBF5,#FFF0E0);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#1a1a1a;direction:rtl}
+.container{padding:40px 24px;max-width:380px;margin:0 auto}
+.icon{font-size:96px;margin-bottom:24px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+h1{font-size:26px;font-weight:900;margin-bottom:12px;background:linear-gradient(135deg,#FF6B35,#FFB830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+p{font-size:15px;color:#888;line-height:1.8;margin-bottom:28px}
+.btn{background:linear-gradient(135deg,#FF6B35,#FFB830);color:#fff;border:none;padding:14px 32px;border-radius:50px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(255,107,53,0.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.wifi{font-size:18px;color:#ccc;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="icon">🍊</div>
+  <h1>لا يوجد اتصال بالإنترنت</h1>
+  <p>يبدو أنك غير متصل حالياً. تحقق من اتصالك ثم حاول مجدداً. سلتك محفوظة ولن تضيع!</p>
+  <button class="btn" onclick="window.location.reload()">🔄 أعد المحاولة</button>
+  <div class="wifi">📶 في انتظار الاتصال…</div>
+</div>
+</body>
+</html>
